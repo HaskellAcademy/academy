@@ -29,6 +29,7 @@ const createRouter = (history, store) => (
   <Router history={history}>
     <Route path='/' component={App}>
       {createRoute({store, routeKey: 'home', indexRoute: true})}
+      {createRoute({store, routeKey: 'learn'})}
       <Route path='*' component={NotFound}/>
     </Route>
   </Router>
