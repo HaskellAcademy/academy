@@ -5,7 +5,7 @@ const Editor = require('../Editor');
 const Learn = () => (
   <div>
     <h1>Learn</h1>
-    <Editor />
+    <Editor defaultValue='test test' />
   </div>
 );
 

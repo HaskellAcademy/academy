@@ -9,11 +9,11 @@ require('codemirror/addon/edit/matchbrackets');
 */
 const Editor = React.createClass({
   propTypes: {
-    defaultContent: React.PropTypes.string,
+    defaultValue: React.PropTypes.string,
   },
 
-  getContent() {
-    return this.refs.editor.getContent();
+  getValue() {
+    return this.refs.editor.getValue();
   },
 
   render() {
@@ -25,7 +25,7 @@ const Editor = React.createClass({
 
     return (
       <CodeMirror ref='editor'
-        defaultContent={this.props.defaultContent}
+        defaultValue={this.props.defaultValue}
         options={options} />
     );
   },

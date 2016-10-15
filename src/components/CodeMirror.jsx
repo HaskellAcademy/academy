@@ -6,7 +6,7 @@ const {fromTextArea} = require('codemirror');
 */
 const CodeMirror = React.createClass({
   propTypes: {
-    defaultContent: React.PropTypes.string,
+    defaultValue: React.PropTypes.string,
     options: React.PropTypes.object,
   },
 
@@ -28,7 +28,7 @@ const CodeMirror = React.createClass({
     }
   },
 
-  getContent() {
+  getValue() {
     if (this._codeMirror) {
       return this._codeMirror.getValue();
     }
