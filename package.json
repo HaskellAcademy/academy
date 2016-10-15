@@ -1,5 +1,5 @@
 {
-  "name": "haskellacademy",
+  "name": "academy",
   "version": "0.0.1",
   "description": "Haskell Academy",
   "main": "",
@@ -10,7 +10,11 @@
     "test": "./node_modules/.bin/mocha --reporter spec --compilers jsx:babel-register \"tests/**/*.tests.js\" \"tests/**/*.tests.jsx\""
   },
   "author": "Sunjay Varma <sunjay.ca>",
-  "license": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sunjay/academy.git"
+  },
   "devDependencies": {
     "autoprefixer": "^6.3.3",
     "babel-core": "^6.7.2",
@@ -40,6 +44,7 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.13.0",
+    "codemirror": "^5.19.0",
     "compass-mixins": "^0.12.10",
     "immutable": "^3.8.1",
     "qwest": "^4.4.5",

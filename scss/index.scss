@@ -11,4 +11,7 @@
   @import '~bootstrap-sass/assets/stylesheets/bootstrap/type';
   @import '~bootstrap-sass/assets/stylesheets/bootstrap/grid';
   @import './partials/buttons';
+
+  @import '~codemirror/lib/codemirror';
+  @import '~codemirror/theme/monokai';
 }
