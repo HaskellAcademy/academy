@@ -2,10 +2,9 @@
   "extends": ["eslint:recommended", "plugin:react/recommended"],
   "env": {
     "browser": true,
-    "node": false,
+    "node": true,
     "es6": true,
     "mocha": true,
-    "webextensions": true,
   },
   "parserOptions": {
     "ecmaVersion": 6,
