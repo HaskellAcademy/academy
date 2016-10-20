@@ -17,7 +17,7 @@ const Editor = React.createClass({
   },
 
   render() {
-    var options = {
+    const options = {
       matchBrackets: true,
       theme: 'monokai',
       mode: 'haskell',

@@ -30,5 +30,7 @@
     "array-bracket-spacing": [2, "never"],
     "space-in-parens": [2, "never"],
     "react/prop-types": 0,
+    "prefer-const": 2,
+    "no-var": 2,
   }
 }
