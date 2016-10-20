@@ -1,0 +1,13 @@
+@import '../partials/variables';
+
+.editor {
+  bottom: 0;
+  left: $lesson-width;
+  position: fixed;
+  right: 0;
+  top: $navbar-height;
+
+  .CodeMirror {
+    height: 100%;
+  }
+}

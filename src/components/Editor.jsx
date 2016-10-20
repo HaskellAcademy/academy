@@ -6,6 +6,8 @@ require('codemirror/mode/haskell/haskell');
 require('codemirror/addon/edit/matchbrackets');
 require('codemirror/addon/edit/closebrackets');
 
+const {editor} = require('../../scss/components/editor.scss');
+
 /**
 * Uncontrolled Editor component for use with Redux
 */
@@ -28,9 +30,11 @@ const Editor = React.createClass({
     };
 
     return (
-      <CodeMirror ref='editor'
-        defaultValue={this.props.defaultValue}
-        options={options} />
+      <div className={editor}>
+        <CodeMirror ref='editor'
+          defaultValue={this.props.defaultValue}
+          options={options} />
+      </div>
     );
   },
 });

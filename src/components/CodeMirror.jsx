@@ -21,6 +21,7 @@ const CodeMirror = React.createClass({
       this._codeMirror = fromTextArea(this._textarea, this.props.options);
       // might want to bind to events here later if that ever becomes a requirement
       this._codeMirror.setValue(this.props.defaultValue || '');
+      this._codeMirror.setSize(null, '100%');
     }, 1);
   },
 
