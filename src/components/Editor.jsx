@@ -20,6 +20,7 @@ const Editor = React.createClass({
 
   render() {
     const options = {
+      lineNumbers: true,
       matchBrackets: true,
       autoCloseBrackets: true,
       theme: 'monokai',
