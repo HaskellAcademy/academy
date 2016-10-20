@@ -1,9 +1,9 @@
-// LAYOUT
+// Layout
 $navbar-height: 50px;
 $lesson-width: 300px;
 $lesson-actions-height: 60px;
 
-// COLORS
+// Colors
 $brand-default: #fff;
 $brand-primary: #2196f3;
 $brand-success: #388e3c;
@@ -11,7 +11,13 @@ $brand-info: #212121;
 
 $navbar-background: #4caf50;
 $lesson-background: #fff;
+$instructions-background: #e8f5e9;
 $lesson-actions-background: $brand-success;
 
-// BUTTON STYLES
+// Typography
+$font-family-sans-serif: 'Open Sans', sans-serif;
+$headings-font-family: 'Exo', sans-serif;
+$headings-font-weight: 600;
+
+// Button Styles
 $btn-font-weight: bold;

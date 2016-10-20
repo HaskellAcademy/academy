@@ -1,10 +1,34 @@
 @import '../partials/variables';
 
+$lesson-padding: 10px;
+
 .lesson {
   background-color: $lesson-background;
   bottom: 0;
   left: 0;
+  padding: $lesson-padding;
   position: fixed;
   top: $navbar-height;
   width: $lesson-width;
+}
+
+.instructions {
+  $title-height: 20px;
+  background-color: $instructions-background;
+  margin-left: -$lesson-padding;
+  margin-right: -$lesson-padding;
+  margin-top: $title-height + $lesson-padding * 2;
+  padding: $lesson-padding;
+
+  .instructionsTitle {
+    background-color: $lesson-background;
+    border: 1px solid $instructions-background;
+    font-size: $title-height;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -($title-height / 2 + $lesson-padding * 2);
+    padding: $lesson-padding / 2;
+    text-align: center;
+    width: 120px;
+  }
 }
