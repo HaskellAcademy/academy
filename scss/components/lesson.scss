@@ -25,11 +25,15 @@
 }
 
 .instructions {
-  $title-height: 20px;
-  background-color: $instructions-background;
+  $title-height: 16px;
+  background-color: rgba($instructions-background, 0.3);
+  border: 1px solid $instructions-background;
   margin-left: -$component-spacing;
   margin-right: -$component-spacing;
-  margin-top: $title-height + $component-spacing * 2;
+  // the multiplier here is extra space intentionally
+  // being added to move the instructions away from
+  // the rest of the lesson content
+  margin-top: $title-height + $component-spacing * 3;
   padding: $component-spacing;
 
   .instructionsTitle {
