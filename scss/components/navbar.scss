@@ -1,7 +1,7 @@
 @import '../partials/variables';
 
 .navbar {
-  background-color: #4caf50;
+  background-color: $navbar-background;
   height: $navbar-height;
   left: 0;
   position: fixed;

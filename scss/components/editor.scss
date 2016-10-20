@@ -1,7 +1,7 @@
 @import '../partials/variables';
 
 .editor {
-  bottom: 0;
+  bottom: $lesson-actions-height;
   left: $lesson-width;
   position: fixed;
   right: 0;

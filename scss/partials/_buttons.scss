@@ -65,6 +65,92 @@ a.btn {
 }
 
 
+// Alternate buttons
+// --------------------------------------------------
+
+// The original button-variant mixin provided with bootstrap
+// breaks here because of a bug with no real workaround yet:
+// https://github.com/davezuko/react-redux-starter-kit/issues/474
+@mixin button-variant2($color, $background, $border) {
+  color: $color;
+  background-color: $background;
+  border-color: $border;
+
+  &:focus,
+  &.focus {
+    background-color: darken($background, 10%);
+    border-color: darken($border, 25%);
+    color: $color;
+  }
+
+  &:hover {
+    background-color: darken($background, 10%);
+    border-color: darken($border, 12%);
+    color: $color;
+  }
+
+  &:active,
+  &.active {
+    background-color: darken($background, 10%);
+    border-color: darken($border, 12%);
+    color: $color;
+
+    &:hover,
+    &:focus,
+    &.focus {
+      background-color: darken($background, 17%);
+      border-color: darken($border, 25%);
+      color: $color;
+    }
+  }
+
+  &:active,
+  &.active {
+    background-image: none;
+  }
+
+  &.disabled,
+  &[disabled],
+  fieldset[disabled] & {
+    &:hover,
+    &:focus,
+    &.focus {
+      background-color: $background;
+      border-color: $border;
+    }
+  }
+
+  .badge {
+    background-color: $color;
+    color: $background;
+  }
+}
+
+.btn-default {
+  @include button-variant2($btn-default-color, $btn-default-bg, $btn-default-border);
+}
+
+.btn-primary {
+  @include button-variant2($btn-primary-color, $btn-primary-bg, $btn-primary-border);
+}
+
+.btn-success {
+  @include button-variant2($btn-success-color, $btn-success-bg, $btn-success-border);
+}
+
+.btn-info {
+  @include button-variant2($btn-info-color, $btn-info-bg, $btn-info-border);
+}
+
+.btn-warning {
+  @include button-variant2($btn-warning-color, $btn-warning-bg, $btn-warning-border);
+}
+
+.btn-danger {
+  @include button-variant2($btn-danger-color, $btn-danger-bg, $btn-danger-border);
+}
+
+
 // Link buttons
 // -------------------------
 
