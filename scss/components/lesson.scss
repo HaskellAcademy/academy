@@ -1,12 +1,10 @@
 @import '../partials/variables';
 
-$lesson-padding: 10px;
-
 .lesson {
   background-color: $lesson-background;
   bottom: 0;
   left: 0;
-  padding: $lesson-padding;
+  padding: $component-spacing;
   position: fixed;
   top: $navbar-height;
   width: $lesson-width;
@@ -18,7 +16,8 @@ $lesson-padding: 10px;
   code {
     background-color: rgba(0, 0, 0, 0.05);
     border: 1px solid rgba(0, 0, 0, 0.07);
-    border-radius: 2px;
+    border-radius: $border-radius-small;
+    font-family: $font-family-monospace;
     font-size: 0.85em;
     line-height: inherit;
     padding: 0.15em 0.25em;
@@ -28,10 +27,10 @@ $lesson-padding: 10px;
 .instructions {
   $title-height: 20px;
   background-color: $instructions-background;
-  margin-left: -$lesson-padding;
-  margin-right: -$lesson-padding;
-  margin-top: $title-height + $lesson-padding * 2;
-  padding: $lesson-padding;
+  margin-left: -$component-spacing;
+  margin-right: -$component-spacing;
+  margin-top: $title-height + $component-spacing * 2;
+  padding: $component-spacing;
 
   .instructionsTitle {
     background-color: $lesson-background;
@@ -39,8 +38,8 @@ $lesson-padding: 10px;
     font-size: $title-height;
     margin-left: auto;
     margin-right: auto;
-    margin-top: -($title-height / 2 + $lesson-padding * 2);
-    padding: $lesson-padding / 2;
+    margin-top: -($title-height / 2 + $component-spacing * 2);
+    padding: $component-spacing / 2;
     text-align: center;
     width: 120px;
   }

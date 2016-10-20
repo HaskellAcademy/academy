@@ -5,7 +5,9 @@
   bottom: 0;
   height: $lesson-actions-height;
   left: $lesson-width;
-  padding: 15px;
+  padding-left: $component-spacing;
+  padding-right: $component-spacing;
+  padding-top: 15px;
   position: fixed;
   right: 0;
 }
