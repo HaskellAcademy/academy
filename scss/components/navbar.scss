@@ -10,8 +10,12 @@
 }
 
 .logo {
-  background-image: url('/static/logo.svg');
+  $height: 40px;
+  background-image: url('../../assets/logo.svg');
   background-size: contain;
-  height: 50px;
-  width: 80px;
+  height: $height;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: ($navbar-height - $height) / 2;
+  width: 204px;
 }

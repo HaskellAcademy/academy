@@ -26,12 +26,12 @@ module.exports = {
         exclude: /(node_modules|bower_components)/,
         loader: 'json-loader',
       },
+      {test: /\.(png|svg)$/, loader: 'url-loader?limit=100000'},
     ],
   },
   plugins: [
     new CopyWebpackPlugin([
       {from: 'index.html'},
-      {from: 'static', to: 'static'},
     ]),
   ],
   resolve: {
