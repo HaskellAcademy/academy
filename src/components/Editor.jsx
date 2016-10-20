@@ -1,8 +1,10 @@
 const React = require('react');
 
 const CodeMirror = require('./CodeMirror');
+// some codemirror CSS is required in index.scss
 require('codemirror/mode/haskell/haskell');
 require('codemirror/addon/edit/matchbrackets');
+require('codemirror/addon/edit/closebrackets');
 
 /**
 * Uncontrolled Editor component for use with Redux
@@ -19,6 +21,7 @@ const Editor = React.createClass({
   render() {
     const options = {
       matchBrackets: true,
+      autoCloseBrackets: true,
       theme: 'monokai',
       mode: 'haskell',
     };
