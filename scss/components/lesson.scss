@@ -10,6 +10,19 @@ $lesson-padding: 10px;
   position: fixed;
   top: $navbar-height;
   width: $lesson-width;
+
+  h1 {
+    margin-bottom: 20px;
+  }
+
+  code {
+    background-color: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.07);
+    border-radius: 2px;
+    font-size: 0.85em;
+    line-height: inherit;
+    padding: 0.15em 0.25em;
+  }
 }
 
 .instructions {
