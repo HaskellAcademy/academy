@@ -1,0 +1,17 @@
+@import '../partials/variables';
+
+.navbar {
+  background-color: #4caf50;
+  height: $navbar-height;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+}
+
+.logo {
+  background-image: url('/static/logo.svg');
+  background-size: contain;
+  height: 50px;
+  width: 80px;
+}

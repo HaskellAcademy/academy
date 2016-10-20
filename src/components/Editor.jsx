@@ -8,9 +8,6 @@ require('codemirror/addon/edit/closebrackets');
 
 const {editor} = require('../../scss/components/editor.scss');
 
-/**
-* Uncontrolled Editor component for use with Redux
-*/
 const Editor = React.createClass({
   propTypes: {
     defaultValue: React.PropTypes.string,
