@@ -1,13 +1,34 @@
 const React = require('react');
+const throttle = require('lodash.throttle');
 const {fromTextArea} = require('codemirror');
 
 /**
-* Uncontrolled CodeMirror component for use with Redux
+* Controlled CodeMirror component for use with Redux
+* Automatically throttles onChange calls to every few seconds
 */
 const CodeMirror = React.createClass({
   propTypes: {
-    defaultValue: React.PropTypes.string,
+    value: React.PropTypes.string,
+    onChange: React.PropTypes.func,
     options: React.PropTypes.object,
+  },
+
+  getDefaultProps() {
+    return {
+      onChange() {},
+    };
+  },
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.hasOwnProperty('value') && nextProps.value !== this.getValue()) {
+      this._codeMirror.setValue(nextProps.value);
+    }
+
+    if (typeof nextProps.options === 'object') {
+      for (const key of Object.keys(nextProps.options)) {
+        this._codeMirror.setOption(key, nextProps.options[key]);
+      }
+    }
   },
 
   componentDidMount() {
@@ -19,8 +40,9 @@ const CodeMirror = React.createClass({
     // Not sure what the right solution is.
     setTimeout(() => {
       this._codeMirror = fromTextArea(this._textarea, this.props.options);
-      // might want to bind to events here later if that ever becomes a requirement
-      this._codeMirror.setValue(this.props.defaultValue || '');
+      this._codeMirror.on('change', throttle(this.valueChanged, 1000));
+
+      this._codeMirror.setValue(this.props.value || '');
       this._codeMirror.setSize(null, '100%');
     }, 1);
   },
@@ -42,6 +64,12 @@ const CodeMirror = React.createClass({
       return this._codeMirror.getValue();
     }
     return null;
+  },
+
+  valueChanged(doc, change) {
+    if (this.props.onChange && change.origin !== 'setValue') {
+      this.props.onChange(doc.getValue());
+    }
   },
 
   render() {

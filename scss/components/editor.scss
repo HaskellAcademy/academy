@@ -10,4 +10,38 @@
   .CodeMirror {
     height: 100%;
   }
+
+  .editorTabs {
+    background-color: $editor-tabs-background;
+    height: $editor-tabs-height;
+    left: 0;
+    padding-left: 10px;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .editorTab {
+    background-color: lighten($editor-tab-background, 10%);
+    box-shadow: 1px 0 1px lighten($editor-tab-background, 10%);
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    height: $editor-tabs-height;
+    line-height: $editor-tabs-height;
+    padding: 0 20px;
+
+    &.activeTab {
+      background-color: $editor-tab-background;
+      box-shadow: 1px 0 1px $editor-tab-background;
+    }
+  }
+
+  .editorContent {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: $editor-tabs-height;
+  }
 }

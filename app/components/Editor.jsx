@@ -1,4 +1,5 @@
 const React = require('react');
+const classNames = require('classnames');
 
 const CodeMirror = require('./CodeMirror');
 // some codemirror CSS is required in index.scss
@@ -6,15 +7,35 @@ require('codemirror/mode/haskell/haskell');
 require('codemirror/addon/edit/matchbrackets');
 require('codemirror/addon/edit/closebrackets');
 
-const {editor} = require('../../scss/components/editor.scss');
+const {
+  editor,
+  editorTabs,
+  editorTab,
+  activeTab,
+  editorContent,
+} = require('../../scss/components/editor.scss');
 
 const Editor = React.createClass({
   propTypes: {
-    defaultValue: React.PropTypes.string,
+    files: React.PropTypes.array,
+    onFileUpdate: React.PropTypes.func,
   },
 
-  getValue() {
-    return this.refs.editor.getValue();
+  getDefaultProps() {
+    return {
+      files: [],
+      onFileUpdate() {},
+    };
+  },
+
+  getInitialState() {
+    return {
+      activeIndex: 0,
+    };
+  },
+
+  onTabChange(index) {
+    this.setState({activeIndex: index});
   },
 
   render() {
@@ -26,11 +47,29 @@ const Editor = React.createClass({
       mode: 'haskell',
     };
 
+    const {files, onFileUpdate} = this.props;
+    const {activeIndex} = this.state;
+
+    const {name, content} = files.length ? files[activeIndex] : {};
+
     return (
       <div className={editor}>
-        <CodeMirror ref='editor'
-          defaultValue={this.props.defaultValue}
-          options={options} />
+        <div className={editorTabs}>
+          {files.map(({name}, index) => (
+            <div key={name} className={classNames({
+              [editorTab]: true,
+              [activeTab]: index === activeIndex,
+            })} onClick={() => this.onTabChange(index)}>
+              {name}
+            </div>
+          ))}
+        </div>
+
+        <div className={editorContent}>
+          <CodeMirror value={content}
+            onChange={(content) => onFileUpdate(name, content)}
+            options={options} />
+        </div>
       </div>
     );
   },
