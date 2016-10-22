@@ -1,6 +1,7 @@
 const koa = require('koa');
 const logger = require('koa-logger');
 const limit = require('koa-better-ratelimit');
+const compress = require('koa-compress');
 
 const app = koa();
 
@@ -11,6 +12,10 @@ app.use(limit({
 }));
 
 app.use(logger());
+
+app.use(compress({
+  flush: require('zlib').Z_SYNC_FLUSH,
+}));
 
 app.use(function *() {
   this.body = 'Hello World';
