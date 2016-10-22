@@ -32,5 +32,6 @@
     "react/prop-types": 0,
     "prefer-const": 2,
     "no-var": 2,
+    "require-yield": 0,
   }
 }
