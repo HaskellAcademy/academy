@@ -4,6 +4,12 @@ const limit = require('koa-better-ratelimit');
 const compress = require('koa-compress');
 const responseTime = require('koa-response-time');
 
+const users = require('./resources/users');
+
+const resources = [
+  users,
+];
+
 const app = koa();
 
 app.use(responseTime());
@@ -20,8 +26,8 @@ app.use(compress({
   flush: require('zlib').Z_SYNC_FLUSH,
 }));
 
-app.use(function *() {
-  this.body = 'Hello World';
-});
+for (const resource of resources) {
+  app.use(resource.middleware());
+}
 
 app.listen(3000);
