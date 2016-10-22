@@ -6,7 +6,7 @@
   "scripts": {
     "start": "./node_modules/.bin/webpack-dev-server --content-base dist/ --inline --hot --port 9189",
     "build": "./node_modules/.bin/webpack",
-    "api": "./node_modules/.bin/nodemon ./src/server.jsx",
+    "api": "./node_modules/.bin/nodemon ./api/index.js",
     "lint": "./node_modules/.bin/eslint '**/*.js' '**/*.jsx'; exit 0",
     "test": "./node_modules/.bin/mocha --reporter spec --compilers jsx:babel-register \"tests/**/*.tests.js\" \"tests/**/*.tests.jsx\"",
     "clean": "rm -rf dist/"

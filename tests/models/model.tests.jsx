@@ -1,6 +1,6 @@
 const {expect} = require('chai');
 
-const {createRecord} = require('../../src/models/model');
+const {createRecord} = require('../../app/models/model');
 
 describe('createRecord', () => {
   const constant = 1234;
