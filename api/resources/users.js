@@ -12,7 +12,14 @@ module.exports = new Resource('users', {
   },
   // GET /users/:id
   show: function *() {
-    this.body = {name: 'Sunjay'};
+    this.body = {
+      id: 1,
+      name: 'Sunjay Varma',
+      email: 'varma.sunjay@gmail.com',
+      picture: {
+        32: 'http://placehold.it/32',
+      },
+    };
   },
   // GET /users/:id/edit
   edit: function *() {

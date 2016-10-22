@@ -5,9 +5,11 @@ const compress = require('koa-compress');
 const responseTime = require('koa-response-time');
 
 const users = require('./resources/users');
+const lessons = require('./resources/lessons');
 
 const resources = [
   users,
+  lessons,
 ];
 
 const app = koa();
