@@ -16,7 +16,7 @@ module.exports = new Resource('lessons', {
   show: function *() {
     //TODO: Disallow getting unpublished or deleted lessons
     this.body = {
-      id: 1,
+      id: this.params.lesson,
       title: 'Diving In',
       summary: '',
       body: '<p>Let\'s dive into some simple Haskell code. Don\'t worry if you do not understand exactly what is happening just yet.</p><p>The code editor on the right is a simple piece of Haskell code that outputs the value of <code>result</code>.</p>',

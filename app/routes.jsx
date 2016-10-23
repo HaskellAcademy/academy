@@ -1,5 +1,6 @@
-const Lesson = require('./components/pages/Lesson');
 const Home = require('./components/pages/Home');
+
+const Lesson = require('./containers/LessonPage');
 
 const routes = Object.freeze({
   home: Object.freeze({
@@ -13,7 +14,7 @@ const routes = Object.freeze({
   }),
   lesson: Object.freeze({
     title: 'Lesson',
-    path: 'lesson',
+    path: 'lesson/:id',
     href: '#/lesson',
     pattern: /^\/lesson\/?.*/,
     component: Lesson,

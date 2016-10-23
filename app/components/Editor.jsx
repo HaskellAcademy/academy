@@ -66,7 +66,7 @@ const Editor = React.createClass({
         </div>
 
         <div className={editorContent}>
-          <CodeMirror value={content}
+          <CodeMirror value={content || ''}
             onChange={(content) => onFileUpdate(name, content)}
             options={options} />
         </div>

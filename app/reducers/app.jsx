@@ -5,10 +5,10 @@ const routes = require('../routes');
 const requests = require('./requests');
 const createPageReducer = require('./page');
 
-const home = require('./pages/home');
+const lesson = require('./pages/lesson');
 
 const page = createPageReducer([
-  {pattern: routes.home.pattern, reducer: home},
+  {pattern: routes.lesson.pattern, reducer: lesson},
 ]);
 
 // Reducers placed here are the top-level of the state object
