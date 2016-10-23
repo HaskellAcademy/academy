@@ -1,36 +1,30 @@
-export class ApiError {
-  constructor(message, code = null) {
-    this.message = message;
-    this.code = code;
-    this.name = this.constructor.name;
-  }
+const qwest = require('qwest');
+const urljoin = require('url-join');
 
-  toString() {
-    return this.message;
-  }
-}
+const config = require('academy-config');
 
 /**
- * @param {Function|Object} transforms - If transforms is an object, each
- *    property should be a function which will be called on the response property
- *    with the same name. If transforms is a function, the response will be passed in raw.
- * @returns {Function} Returns a function to be passed to then()
+ * Creates an API client that works for a certain resource
+ * url is the resource url (e.g. '/users')
  */
-export function processResponse(transforms) {
-  return (xhr, response) => {
-    if (!transforms) {
-      return response;
-    }
-
-    if (typeof transforms === 'function') {
-      return transforms(response);
-    }
-
-    const processed = {...response};
-    for (const key of Object.keys(transforms)) {
-      processed[key] = transforms[key](processed[key]);
-    }
-
-    return processed;
+export function createResourceClient(url, Model) {
+  const baseUrl = urljoin(config.api.host, url);
+  return {
+    list() {
+      return qwest.get(baseUrl);
+    },
+    get(id) {
+      return qwest.get(urljoin(baseUrl, id))
+        .then((_, response) => new Model(response));
+    },
+    create(model) {
+      return qwest.post(baseUrl, model.toJSON());
+    },
+    update(id, model) {
+      return qwest.put(urljoin(baseUrl, id), model.toJSON());
+    },
+    delete(id) {
+      return qwest.delete(urljoin(baseUrl, id));
+    },
   };
 }
