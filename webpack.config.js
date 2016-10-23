@@ -3,6 +3,8 @@ const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 
+const configPath = require('./config/resolve');
+
 module.exports = {
   entry: './app/index.jsx',
   output: {
@@ -36,6 +38,9 @@ module.exports = {
   ],
   resolve: {
     extensions: ['', '.js', '.jsx'],
+    alias: {
+      'academy-config': configPath,
+    },
   },
   devtool: 'inline-source-map',
   postcss: [autoprefixer],
