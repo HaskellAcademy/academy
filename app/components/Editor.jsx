@@ -45,6 +45,11 @@ const Editor = React.createClass({
       autoCloseBrackets: true,
       theme: 'monokai',
       mode: 'haskell',
+      extraKeys: {
+        Tab(cm) {
+          cm.execCommand('insertSoftTab');
+        },
+      },
     };
 
     const {files, onFileUpdate} = this.props;
