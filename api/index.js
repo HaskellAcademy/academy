@@ -3,6 +3,9 @@ const logger = require('koa-logger');
 const limit = require('koa-better-ratelimit');
 const compress = require('koa-compress');
 const responseTime = require('koa-response-time');
+const cors = require('koa-cors');
+
+const config = require('../config/config');
 
 const users = require('./resources/users');
 const lessons = require('./resources/lessons');
@@ -14,15 +17,19 @@ const resources = [
 
 const app = koa();
 
+app.use(logger());
+
 app.use(responseTime());
+
+app.use(cors({
+  origin: config.app.host,
+}));
 
 app.use(limit({
   duration: 3*60*1000,
   max: 100,
   blacklist: ['127.0.0.1'],
 }));
-
-app.use(logger());
 
 app.use(compress({
   flush: require('zlib').Z_SYNC_FLUSH,
