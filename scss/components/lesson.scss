@@ -4,6 +4,7 @@
   background-color: $lesson-background;
   bottom: 0;
   left: 0;
+  overflow-y: auto;
   padding: $component-spacing;
   position: fixed;
   top: $navbar-height;
