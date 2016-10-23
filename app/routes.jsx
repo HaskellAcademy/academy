@@ -1,4 +1,4 @@
-const Learn = require('./components/pages/Learn');
+const Lesson = require('./components/pages/Lesson');
 const Home = require('./components/pages/Home');
 
 const routes = Object.freeze({
@@ -11,14 +11,14 @@ const routes = Object.freeze({
     onEnter: Home.onPageEnter,
     onLeave: Home.onPageLeave,
   }),
-  learn: Object.freeze({
-    title: 'Learn',
-    path: 'learn',
-    href: '#/learn',
-    pattern: /^\/learn\/?.*/,
-    component: Learn,
-    onEnter: Learn.onPageEnter,
-    onLeave: Learn.onPageLeave,
+  lesson: Object.freeze({
+    title: 'Lesson',
+    path: 'lesson',
+    href: '#/lesson',
+    pattern: /^\/lesson\/?.*/,
+    component: Lesson,
+    onEnter: Lesson.onPageEnter,
+    onLeave: Lesson.onPageLeave,
   }),
 });
 

@@ -6,7 +6,7 @@ const Editor = require('../Editor');
 const OutputWindow = require('../OutputWindow');
 const LessonActions = require('../LessonActions');
 
-const Learn = () => (
+const LessonPage = () => (
   <div>
     <Navbar />
     <Lesson />
@@ -16,4 +16,4 @@ const Learn = () => (
   </div>
 );
 
-module.exports = Learn;
+module.exports = LessonPage;
