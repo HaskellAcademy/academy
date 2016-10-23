@@ -5,7 +5,7 @@ const Navbar = require('../Navbar');
 const Lesson = require('../../containers/Lesson');
 const LessonFileEditor = require('../../containers/LessonFileEditor');
 const OutputWindow = require('../OutputWindow');
-const LessonActions = require('../LessonActions');
+const LessonActions = require('../../containers/LessonActionBar');
 
 const LessonPage = React.createClass({
   propTypes: {

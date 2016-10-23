@@ -3,11 +3,16 @@ const {sendRequest} = require('./RequestActions');
 
 const lessonApi = require('../api/lessonApi');
 
+export const ACTION_RESET_CODE = Actions.register('reset-code');
 export const ACTION_UPDATE_FILE = Actions.register('update-file');
 export const ACTION_UPDATE_OUTPUT = Actions.register('update-output');
 export const ACTION_UPDATE_OUTPUT_ERROR = Actions.register('update-output-error');
 export const ACTION_FETCH_LESSON = Actions.register('fetch-lesson');
 export const ACTION_UPDATE_LESSON = Actions.register('update-lesson');
+
+export const resetCode = Actions.registerActionCreator(
+  ACTION_RESET_CODE
+);
 
 export const updateFile = Actions.registerActionCreator(
   ACTION_UPDATE_FILE,
