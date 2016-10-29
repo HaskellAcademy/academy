@@ -1,4 +1,5 @@
 module HaskellAcademy.IO (
+  module Prelude,
   putStr,
   putStrLn,
   print
