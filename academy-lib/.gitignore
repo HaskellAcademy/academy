@@ -1,5 +1,9 @@
 submission/*
 !submission/.gitkeep
+pending/*
+!pending/.gitkeep
+completed/*
+!completed/.gitkeep
 
 # Created by https://www.gitignore.io/api/haskell
 
