@@ -7,7 +7,7 @@
     "start": "./node_modules/.bin/webpack-dev-server --content-base dist/ --inline --hot --port 9189",
     "build": "./node_modules/.bin/webpack",
     "api": "./node_modules/.bin/nodemon ./api/index.js",
-    "compiler": "./node_modules/.bin/nodemon ./bin/haskell-compiler.js",
+    "compiler-runner": "./node_modules/.bin/nodemon ./bin/haskell-compiler.js",
     "lint": "./node_modules/.bin/eslint '**/*.js' '**/*.jsx'; exit 0",
     "test": "./node_modules/.bin/mocha --reporter spec --compilers jsx:babel-register \"tests/**/*.tests.js\" \"tests/**/*.tests.jsx\"",
     "clean": "rm -rf dist/"
@@ -50,6 +50,7 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.13.0",
+    "bunyan": "^1.8.4",
     "chokidar": "^1.6.1",
     "classnames": "^2.2.5",
     "codemirror": "^5.19.0",

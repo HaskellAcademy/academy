@@ -18,19 +18,44 @@
  *    academy-lib/completed/476ae62f759f4ced8378c645c5332679/output.js
  *
  * Once the compiled script is moved into completed, this script will move the next
- * set of scripts in to compile them.
- * The completed scripts can then be moved into the database at leisure as quickly
- * as possible between compiles. Compiling is given priority because it takes
- * the longest
+ * set of scripts in to the submission folder to compile them.
+ * The completed scripts can then be moved into the database at leisure
+ * while this script continues to compile. Compiling is given priority because
+ * it takes the longest. This script runs in the same space as the compiler
+ * so it has no network or database access. Another process must manage the
+ * completed folder and write the results to whereever they need to go after
+ * compilation.
+ *
+ * If an error occurs, it is written to error.txt instead of output.js
  */
 
-const chokidar = require('chokidar');
+const {basename} = require('path');
 
-const watcher = chokidar.watch('./academy-lib/{pending,completed}/*', {ignored: /[\/\\]\./});
+const chokidar = require('chokidar');
+const bunyan = require('bunyan');
+const throttle = require('lodash.throttle');
+
+const log = bunyan.createLogger({name: 'haskell-compiler'});
+const watcher = chokidar.watch('./academy-lib/pending/*', {ignored: /[\/\\]\./});
+
+// List of IDs
+const pending = [];
 
 watcher.on('addDir', (path) => {
+  const id = basename(path);
+  pending.push(id);
+  log.info(`Task with id '${id}' is pending`);
 });
 watcher.on('unlinkDir', (path) => {
+  const id = basename(path);
+  const index = pending.indexOf(id);
+  if (index > -1) {
+    pending.splice(index, 1);
+  }
 });
-watcher.on('error', (path) => {
+watcher.on('error', (error) => {
+  log.error(error);
 });
+
+const flushCompletions = throttle(() => {
+}, 300);
