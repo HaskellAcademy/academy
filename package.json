@@ -13,7 +13,7 @@
     "clean": "rm -rf dist/"
   },
   "author": "Sunjay Varma <sunjay.ca>",
-  "license": "MIT",
+  "license": "GPL-3.0+",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sunjay/academy.git"
