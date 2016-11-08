@@ -32,7 +32,7 @@ export const sendRequest = Actions.registerActionCreator(
       }));
 
       const requestNumber = getState().requests.getRequestNumber(id);
-      request.then((response) => {
+      return request.then((response) => {
         if (getState().requests.getRequestNumber(id) === requestNumber) {
           maybeDispatch(success(response));
         }

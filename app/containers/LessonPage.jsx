@@ -10,7 +10,7 @@ const mapStateToProps = ({page: {lesson: {title}}}, {params: {id}}) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   fetch(id) {
-    dispatch(fetchLesson(id));
+    return dispatch(fetchLesson(id));
   },
 });
 
