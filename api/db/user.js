@@ -8,7 +8,17 @@ module.exports = function(sequelize, DataTypes) {
     name: DataTypes.TEXT,
     email: DataTypes.TEXT,
     photo: DataTypes.TEXT,
+    lastLogin: DataTypes.DATE,
+    isActive: DataTypes.BOOLEAN,
+    notes: DataTypes.TEXT,
+    role: {
+      type: DataTypes.ENUM,
+      values: ['user', 'admin', 'superadmin'],
+      defaultValue: 'user',
+    },
     googleId: DataTypes.TEXT,
+    twitterId: DataTypes.TEXT,
+    githubId: DataTypes.TEXT,
   }, {
     timestamps: true,
     paranoid: true,
