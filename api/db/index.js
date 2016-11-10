@@ -4,14 +4,14 @@ const Sequelize = require('sequelize');
 const env = {}; //TODO
 
 const sequelize = new Sequelize(env.DATABASE_URL, {
-    dialect: 'postgres',
-    protocol: 'postgres',
-    dialectOptions: {
-        ssl: true,
-    },
-    define: {
-      timestamps: false,
-    },
+  dialect: 'postgres',
+  protocol: 'postgres',
+  dialectOptions: {
+    ssl: true,
+  },
+  define: {
+    timestamps: false,
+  },
 });
 
 const importModel = (name) => (
