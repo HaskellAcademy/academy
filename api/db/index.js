@@ -21,6 +21,10 @@ const importModel = (name) => (
 export const User = importModel('user');
 export const Lesson = importModel('lesson');
 export const Progress = importModel('progress');
+export const Submission = importModel('submission');
 
 User.belongsToMany(Lesson, {through: Progress});
 Lesson.belongsToMany(User, {through: Progress});
+
+User.hasOne(Submission);
+Lesson.hasMany(Submission);
