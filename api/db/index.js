@@ -19,3 +19,4 @@ const importModel = (name) => (
 );
 
 export const User = importModel('user');
+export const Lesson = importModel('lesson');
