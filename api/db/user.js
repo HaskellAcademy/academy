@@ -7,7 +7,6 @@ module.exports = function(sequelize, DataTypes) {
     },
     name: DataTypes.TEXT,
     email: DataTypes.TEXT,
-    photo: DataTypes.TEXT,
     lastLogin: DataTypes.DATE,
     // If isActive is false for a user, they cannot login
     // Their account is disabled
