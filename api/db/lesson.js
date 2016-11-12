@@ -40,6 +40,29 @@ module.exports = function(sequelize, DataTypes) {
     // field is generally not meant to be operated on by the
     // backend other than to send the entire contents to
     // the frontend.
+    // For lessons, the format of data should be:
+    // {
+    //   "body": "Lesson HTML content",
+    //   "instructions": "Instructions section HTML content",
+    //   "files": [
+    //     {
+    //       "name": "Main.hs",
+    //       "content": "Haskell code"
+    //     }
+    //   ],
+    // }
+    // For quizzes, the format of data should be:
+    // [
+    //   {
+    //     "questionHTML": "Question <strong>HTML</strong> content",
+    //     "type": "multiple-choice or multiple-answer",
+    //     "options": [
+    //       "Option HTML",
+    //       "Option 2 HTML",
+    //       "Option 3 HTML",
+    //     ]
+    //   }
+    // ]
     data: {type: DataTypes.JSON, allowNull: false},
 
     // Lessons have a maxScore of 1 which means they completed
