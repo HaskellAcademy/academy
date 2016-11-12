@@ -1,9 +1,7 @@
 const path = require('path');
 const Sequelize = require('sequelize');
 
-const env = {}; //TODO
-
-const sequelize = new Sequelize(env.DATABASE_URL, {
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: 'postgres',
   protocol: 'postgres',
   dialectOptions: {
@@ -14,14 +12,16 @@ const sequelize = new Sequelize(env.DATABASE_URL, {
   },
 });
 
+exports.sync = sequelize.sync.bind(sequelize);
+
 const importModel = (name) => (
   sequelize.import(path.join(__dirname, `${name}`))
 );
 
-export const User = importModel('user');
-export const Lesson = importModel('lesson');
-export const Progress = importModel('progress');
-export const Submission = importModel('submission');
+const User = exports.User = importModel('user');
+const Lesson = exports.Lesson = importModel('lesson');
+const Progress = exports.Progress = importModel('progress');
+const Submission = exports.Submission = importModel('submission');
 
 User.belongsToMany(Lesson, {through: Progress});
 Lesson.belongsToMany(User, {through: Progress});
