@@ -16,6 +16,8 @@ module.exports = function(sequelize, DataTypes) {
       },
     },
   }, {
+    // we do not want sequelize to pluralize this name
+    freezeTableName: true,
     timestamps: true,
     paranoid: true,
     createdAt: 'created',
