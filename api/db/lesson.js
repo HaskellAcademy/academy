@@ -6,7 +6,14 @@ module.exports = function(sequelize, DataTypes) {
       autoIncrement: true,
     },
 
-    index: {type: DataTypes.INTEGER, allowNull: false},
+    index: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        // 0 is the start lesson
+        min: 0,
+      },
+    },
     title: {type: DataTypes.TEXT, allowNull: false},
     sectionTitle: {type: DataTypes.TEXT, allowNull: false},
 

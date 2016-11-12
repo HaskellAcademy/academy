@@ -6,7 +6,10 @@ module.exports = function(sequelize, DataTypes) {
       autoIncrement: true,
     },
     name: DataTypes.TEXT,
-    email: DataTypes.TEXT,
+    email: {
+      type: DataTypes.TEXT,
+      validate: {isEmail: true},
+    },
     lastLogin: DataTypes.DATE,
     // If isActive is false for a user, they cannot login
     // Their account is disabled
