@@ -8,7 +8,13 @@ module.exports = function(sequelize, DataTypes) {
     // For quizzes, the score represents the number of questions
     // they got right out of a maximum score listed in the
     // lesson table
-    score: {type: DataTypes.INTEGER, allowNull: false},
+    score: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        min: 0,
+      },
+    },
   }, {
     timestamps: true,
     paranoid: true,

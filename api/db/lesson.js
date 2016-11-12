@@ -69,7 +69,15 @@ module.exports = function(sequelize, DataTypes) {
     // the lesson successfully
     // Quizzes have a maxScore of the number of questions
     // in the quiz
-    maxScore: {type: DataTypes.INTEGER, allowNull: false},
+    maxScore: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        // Do not allow defining a lesson that is always
+        // incomplete or an empty quiz
+        min: 1,
+      },
+    },
 
     // If expectedOutput is null, the user can immediately move on
     // from this lesson after their first submission
