@@ -34,5 +34,6 @@
     "no-var": 2,
     "require-yield": 0,
     "indent": [2, 2],
+    "key-spacing": 2,
   }
 }
