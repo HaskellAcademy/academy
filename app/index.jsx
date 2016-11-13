@@ -4,7 +4,7 @@ const React = require('react');
 const ReactDOM = require('react-dom');
 const {Provider} = require('react-redux');
 const {compose, createStore, applyMiddleware} = require('redux');
-const {hashHistory} = require('react-router');
+const {browserHistory} = require('react-router');
 const {routerMiddleware, syncHistoryWithStore} = require('react-router-redux');
 const createLogger = require('redux-logger');
 const thunk = require('redux-thunk').default;
@@ -17,12 +17,12 @@ const store = createStore(
   appReducer,
   compose(
     // The logger MUST be last (other than DevTools)
-    applyMiddleware(routerMiddleware(hashHistory), thunk, logger),
+    applyMiddleware(routerMiddleware(browserHistory), thunk, logger),
     window.devToolsExtension ? window.devToolsExtension() : f => f
   )
 );
 
-const history = syncHistoryWithStore(hashHistory, store);
+const history = syncHistoryWithStore(browserHistory, store);
 
 ReactDOM.render(
   <Provider store={store}>
