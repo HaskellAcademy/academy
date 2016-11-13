@@ -3,7 +3,7 @@ const WebpackDevServer = require('webpack-dev-server');
 const config = require('./webpack.config.js');
 
 config.entry.unshift('webpack/hot/only-dev-server');
-config.entry.unshift('webpack-dev-server/client?http://local.haskellacademy.com:9189/');
+config.entry.unshift('webpack-dev-server/client?http://0.0.0.0:9189/');
 
 config.plugins = (config.plugins || []).concat([
   new webpack.HotModuleReplacementPlugin(),
