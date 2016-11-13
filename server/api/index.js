@@ -6,11 +6,10 @@ const responseTime = require('koa-response-time');
 const cors = require('koa-cors');
 const session = require('koa-session');
 const bodyParser = require('koa-bodyparser');
-const passport = require('koa-passport');
 
 const config = require('../../config/config');
 
-const auth = require('./auth')();
+const auth = require('./auth');
 
 const users = require('./resources/users');
 const lessons = require('./resources/lessons');
@@ -47,11 +46,8 @@ app.use(session({
 }, app));
 
 app.use(bodyParser());
-app.use(passport.initialize());
-app.use(passport.session());
 
-app.use(auth.routes());
-app.use(auth.allowedMethods());
+auth.setup(app);
 
 for (const resource of resources) {
   app.use(resource.middleware());
