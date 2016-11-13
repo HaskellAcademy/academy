@@ -22,7 +22,8 @@ app.use(logger());
 app.use(responseTime());
 
 app.use(cors({
-  origin: config.app.host,
+  // allow any origin while developing
+  origin: config.isDev ? true : config.app.host,
 }));
 
 app.use(limit({

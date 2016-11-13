@@ -1,4 +1,6 @@
 module.exports = {
+  isDev: true,
+
   api: {
     hostname: 'api.local.haskellacademy.com',
     port: 3000,

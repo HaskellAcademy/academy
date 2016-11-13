@@ -6,7 +6,7 @@ const autoprefixer = require('autoprefixer');
 const configPath = require('./config/resolve');
 
 module.exports = {
-  entry: './app/index.jsx',
+  entry: ['./app/index.jsx'],
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
