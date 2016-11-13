@@ -1,3 +1,5 @@
+require('./resolve-env')();
+
 const koa = require('koa');
 const host = require('koa-mount-hostname');
 
