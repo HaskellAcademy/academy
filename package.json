@@ -4,8 +4,7 @@
   "description": "Haskell Academy",
   "main": "",
   "scripts": {
-    "start": "node ./webpack-dev-server.js",
-    "server": "./node_modules/.bin/nodemon ./server/index.js",
+    "start": "./node_modules/.bin/nodemon ./server/index.js & node ./webpack-dev-server.js",
     "build": "./node_modules/.bin/webpack",
     "lint": "./node_modules/.bin/eslint '**/*.js' '**/*.jsx'; exit 0",
     "test": "./node_modules/.bin/mocha --reporter spec --compilers jsx:babel-register \"tests/**/*.tests.js\" \"tests/**/*.tests.jsx\"",
