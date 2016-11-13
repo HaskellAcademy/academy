@@ -3,6 +3,7 @@ const urljoin = require('url-join');
 const router = require('koa-router');
 const passport = require('koa-passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+const TwitterStrategy = require('passport-twitter').Strategy;
 
 const config = require('../../../config/config');
 
@@ -41,6 +42,21 @@ function setupPassport() {
       //});
     }
   ));
+
+  passport.use(new TwitterStrategy(
+    {
+      consumerKey: process.env.TWITTER_CONSUMER_KEY,
+      consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
+      callbackURL: urljoin(config.api.host, '/auth/twitter/callback'),
+    },
+    function(token, tokenSecret, profile, done) {
+      console.log('twitter auth profile', profile);
+      done(null, {id: 1});
+      //User.findOrCreate({twitterId: profile.id}, function(err, user) {
+      //  return done(err, user);
+      //});
+    }
+  ));
 }
 
 function setupRouter() {
@@ -54,6 +70,18 @@ function setupRouter() {
 
   routes.get('/auth/google/callback',
     passport.authenticate('google', {
+      //TODO: Redirect to something real
+      successRedirect: '/',
+      failureRedirect: '/login',
+    })
+  );
+
+  routes.get('/auth/twitter',
+    passport.authenticate('twitter')
+  );
+
+  routes.get('/auth/twitter/callback',
+    passport.authenticate('twitter', {
       //TODO: Redirect to something real
       successRedirect: '/',
       failureRedirect: '/login',
