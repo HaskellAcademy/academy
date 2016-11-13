@@ -4,7 +4,7 @@ const limit = require('koa-better-ratelimit');
 const compress = require('koa-compress');
 const responseTime = require('koa-response-time');
 const cors = require('koa-cors');
-const session = require('koa-session');
+const session = require('koa-generic-session');
 const bodyParser = require('koa-bodyparser');
 
 const config = require('../../config/config');
@@ -20,7 +20,6 @@ const resources = [
 ];
 
 const app = koa();
-app.keys = [process.env.SESSION_SECRET];
 
 app.use(logger());
 
@@ -43,7 +42,7 @@ app.use(compress({
 
 app.use(session({
   key: 'ha:sess', // cookie name
-}, app));
+}));
 
 app.use(bodyParser());
 

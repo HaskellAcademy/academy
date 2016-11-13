@@ -9,6 +9,7 @@ const api = require('./api');
 const webApp = require('./web');
 
 const app = koa();
+app.keys = [process.env.SESSION_SECRET];
 
 app.use(host(config.api.hostname, api));
 app.use(host(config.app.hostname, webApp));
