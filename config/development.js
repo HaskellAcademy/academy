@@ -1,9 +1,23 @@
 module.exports = {
+  isDev: true,
+
   api: {
-    host: 'http://localhost:3000',
+    hostname: 'api.local.haskellacademy.com',
+    port: 3000,
+    protocol: 'http',
+    get host() {
+      const port = this.port === 80 ? '' : `:${this.port}`;
+      return `${this.protocol}://${this.hostname}${port}`;
+    },
   },
 
   app: {
-    host: 'http://localhost:9189',
+    hostname: 'local.haskellacademy.com',
+    port: 3000,
+    protocol: 'http',
+    get host() {
+      const port = this.port === 80 ? '' : `:${this.port}`;
+      return `${this.protocol}://${this.hostname}${port}`;
+    },
   },
 };

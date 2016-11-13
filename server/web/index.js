@@ -4,16 +4,7 @@ const limit = require('koa-better-ratelimit');
 const compress = require('koa-compress');
 const responseTime = require('koa-response-time');
 const cors = require('koa-cors');
-
-const config = require('../config/config');
-
-const users = require('./resources/users');
-const lessons = require('./resources/lessons');
-
-const resources = [
-  users,
-  lessons,
-];
+const send = require('koa-send');
 
 const app = koa();
 
@@ -21,9 +12,7 @@ app.use(logger());
 
 app.use(responseTime());
 
-app.use(cors({
-  origin: config.app.host,
-}));
+app.use(cors());
 
 app.use(limit({
   duration: 3*60*1000,
@@ -35,8 +24,13 @@ app.use(compress({
   flush: require('zlib').Z_SYNC_FLUSH,
 }));
 
-for (const resource of resources) {
-  app.use(resource.middleware());
-}
+app.use(function*() {
+  if (this.path === '/bundle.js') {
+    yield send(this, 'dist/bundle.js');
+  }
+  else {
+    yield send(this, 'dist/index.html');
+  }
+});
 
-app.listen(3000);
+module.exports = app;
