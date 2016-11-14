@@ -4,6 +4,7 @@ const router = require('koa-router');
 const passport = require('koa-passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const TwitterStrategy = require('passport-twitter').Strategy;
+const GitHubStrategy = require('passport-github').Strategy;
 
 const config = require('../../../config/config');
 
@@ -57,6 +58,21 @@ function setupPassport() {
       //});
     }
   ));
+
+  passport.use(new GitHubStrategy(
+    {
+      clientID: process.env.GITHUB_CLIENT_ID,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET,
+      callbackURL: urljoin(config.api.host, '/auth/github/callback'),
+    },
+    function(accessToken, refreshToken, profile, done) {
+      console.log('github auth profile', profile);
+      done(null, {id: 1});
+      //User.findOrCreate({githubId: profile.id}, function(err, user) {
+      //  return done(err, user);
+      //});
+    }
+  ));
 }
 
 function setupRouter() {
@@ -82,6 +98,18 @@ function setupRouter() {
 
   routes.get('/auth/twitter/callback',
     passport.authenticate('twitter', {
+      //TODO: Redirect to something real
+      successRedirect: '/',
+      failureRedirect: '/login',
+    })
+  );
+
+  routes.get('/auth/github',
+    passport.authenticate('github')
+  );
+
+  routes.get('/auth/github/callback',
+    passport.authenticate('github', {
       //TODO: Redirect to something real
       successRedirect: '/',
       failureRedirect: '/login',
