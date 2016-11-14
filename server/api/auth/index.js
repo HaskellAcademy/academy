@@ -86,9 +86,8 @@ function setupRouter() {
 
   routes.get('/auth/google/callback',
     passport.authenticate('google', {
-      //TODO: Redirect to something real
-      successRedirect: '/',
-      failureRedirect: '/login',
+      successRedirect: '/auth/success',
+      failureRedirect: '/auth/failure',
     })
   );
 
@@ -98,9 +97,8 @@ function setupRouter() {
 
   routes.get('/auth/twitter/callback',
     passport.authenticate('twitter', {
-      //TODO: Redirect to something real
-      successRedirect: '/',
-      failureRedirect: '/login',
+      successRedirect: '/auth/success',
+      failureRedirect: '/auth/failure',
     })
   );
 
@@ -110,11 +108,37 @@ function setupRouter() {
 
   routes.get('/auth/github/callback',
     passport.authenticate('github', {
-      //TODO: Redirect to something real
-      successRedirect: '/',
-      failureRedirect: '/login',
+      successRedirect: '/auth/success',
+      failureRedirect: '/auth/failure',
     })
   );
+
+  // Used to force cookies to get set for a specific
+  // session. Works because we override the sessionIdStore
+  // in koa-generic-session to use a query.sid parameter
+  // as the sessionId.
+  // We return the user here so the client doesn't need
+  // to make another request afterwards to get that
+  routes.get('/auth/me', function*() {
+    console.log('me', this.sessionId);
+    // forces set cookie
+    this.sessionSave = true;
+    //TODO: Real user based on what is stored in the session
+    this.body = {id: 1};
+  });
+
+  routes.all('/auth/success', function*() {
+    if (!this.sessionId) {
+      this.throw(400, 'Your session is invalid');
+    }
+    this.redirect(urljoin(config.app.host, `/login/finish?sid=${this.sessionId}`));
+    this.status = 302;
+  });
+
+  routes.all('/auth/failure', function*() {
+    //TODO: Attach failure reason
+    this.redirect(urljoin(config.app.host, '/login'));
+  });
 
   return routes;
 }

@@ -40,8 +40,39 @@ app.use(compress({
   flush: require('zlib').Z_SYNC_FLUSH,
 }));
 
+// This is mostly copied from koa-generic-session
+// We have to do it in this messy way because their
+// API really sucks. All we are trying to do here
+// is make the sessionIdStore check for a query
+// parameter called sid and use that for the sessionId
+// if it is available. This allows us to let the client
+// set a session id we send them after authentication
+const sessionCookieName = 'ha:sess';
+const sessionCookie = {
+  httpOnly: true,
+  path: '/',
+  overwrite: true,
+  signed: true,
+  maxAge: 24 * 60 * 60 * 1000,
+};
 app.use(session({
-  key: 'ha:sess', // cookie name
+  key: sessionCookieName, // cookie name
+  sessionIdStore: {
+    get() {
+      if (this.query.sid) {
+        return this.query.sid;
+      }
+      return this.cookies.get(sessionCookieName, sessionCookie);
+    },
+
+    set(sid, session) {
+      this.cookies.set(sessionCookieName, sid, session.cookie);
+    },
+
+    reset() {
+      this.cookies.set(sessionCookieName, null);
+    },
+  },
 }));
 
 app.use(bodyParser());
