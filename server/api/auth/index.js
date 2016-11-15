@@ -79,6 +79,7 @@ function setupRouter() {
   const routes = router();
 
   routes.get('/auth/google',
+    saveRedirect,
     passport.authenticate('google', {
       scope: ['profile', 'email'],
     })
@@ -92,6 +93,7 @@ function setupRouter() {
   );
 
   routes.get('/auth/twitter',
+    saveRedirect,
     passport.authenticate('twitter')
   );
 
@@ -103,6 +105,7 @@ function setupRouter() {
   );
 
   routes.get('/auth/github',
+    saveRedirect,
     passport.authenticate('github')
   );
 
@@ -131,14 +134,47 @@ function setupRouter() {
     if (!this.sessionId) {
       this.throw(400, 'Your session is invalid');
     }
-    this.redirect(urljoin(config.app.host, `/login/finish?sid=${this.sessionId}`));
+
+    const next = this.session.afterLogin || '/';
+    const path = `/login/finish?sid=${this.sessionId}&next=${next}`;
+    const origin = this.session.loginOrigin || config.app.host;
+
+    this.redirect(urljoin(origin, path));
+    this.session.loginOrigin = null;
+    this.session.afterLogin = null;
     this.status = 302;
   });
 
   routes.all('/auth/failure', function*() {
+    const origin = this.session.loginOrigin || config.app.host;
+
     //TODO: Attach failure reason
-    this.redirect(urljoin(config.app.host, '/login'));
+    this.redirect(urljoin(origin, '/login'));
+    this.session.loginOrigin = null;
+    this.session.afterLogin = null;
   });
 
   return routes;
+}
+
+function* saveRedirect(next) {
+  // This is a special hack just for development
+  // We have to do this because the development server is
+  // on a different port than what we need to go to
+  // The proxy server is not listed as the origin so
+  // we use the referrer as a trick in order to go
+  // to the right place after login
+  if (process.env.NODE_ENV !== 'production') {
+    this.session.loginOrigin = this.headers.referer;
+  }
+  else {
+    this.session.loginOrigin = this.origin;
+  }
+  if (this.query.next) {
+    this.session.afterLogin = this.query.next;
+  }
+  else {
+    this.session.afterLogin = null;
+  }
+  yield next;
 }
