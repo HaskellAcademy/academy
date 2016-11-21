@@ -17,7 +17,12 @@ const Home = () => (
         Login with Twitter
       </a>
     </p>
-    <Link to='/lesson/1'>Lesson</Link>
+    <p>
+      <Link to='/lesson/1'>Lesson</Link>
+    </p>
+    <p>
+      <a href='http://api.local.haskellacademy.com:3000/auth/logout'>Logout</a>
+    </p>
   </div>
 );
 

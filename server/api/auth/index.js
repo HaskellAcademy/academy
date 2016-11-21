@@ -116,6 +116,14 @@ function setupRouter() {
     })
   );
 
+  routes.get('/auth/logout', saveRedirect, function*() {
+    const origin = this.session.loginOrigin || config.app.host;
+
+    this.redirect(urljoin(origin, '/login'));
+    this.session.loginOrigin = null;
+    this.session.afterLogin = null;
+  });
+
   routes.get('/auth/me', function*() {
     console.log('me', this.sessionId);
     // forces set cookie
