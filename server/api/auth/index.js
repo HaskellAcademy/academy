@@ -117,6 +117,9 @@ function setupRouter() {
   );
 
   routes.get('/auth/logout', saveRedirect, function*() {
+    this.logout();
+    this.redirect('/');
+
     const origin = this.session.loginOrigin || config.app.host;
 
     this.redirect(urljoin(origin, '/login'));
