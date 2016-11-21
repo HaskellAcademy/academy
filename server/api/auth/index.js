@@ -116,12 +116,6 @@ function setupRouter() {
     })
   );
 
-  // Used to force cookies to get set for a specific
-  // session. Works because we override the sessionIdStore
-  // in koa-generic-session to use a query.sid parameter
-  // as the sessionId.
-  // We return the user here so the client doesn't need
-  // to make another request afterwards to get that
   routes.get('/auth/me', function*() {
     console.log('me', this.sessionId);
     // forces set cookie
@@ -131,15 +125,10 @@ function setupRouter() {
   });
 
   routes.all('/auth/success', function*() {
-    if (!this.sessionId) {
-      this.throw(400, 'Your session is invalid');
-    }
-
     const next = this.session.afterLogin || '/';
-    const path = `/login/finish?sid=${this.sessionId}&next=${next}`;
     const origin = this.session.loginOrigin || config.app.host;
 
-    this.redirect(urljoin(origin, path));
+    this.redirect(urljoin(origin, next));
     this.session.loginOrigin = null;
     this.session.afterLogin = null;
     this.status = 302;
