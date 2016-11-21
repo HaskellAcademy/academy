@@ -3,6 +3,10 @@ const urljoin = require('url-join');
 
 const config = require('academy-config');
 
+qwest.setDefaultOptions({
+  withCredentials: true,
+});
+
 /**
  * Creates an API client that works for a certain resource
  * url is the resource url (e.g. '/users')

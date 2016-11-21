@@ -28,6 +28,8 @@ app.use(responseTime());
 app.use(cors({
   // allow any origin while developing
   origin: config.isDev ? true : config.app.host,
+  // allow cookies to be passed cross-origin
+  credentials: true,
 }));
 
 app.use(limit({
