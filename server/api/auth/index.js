@@ -8,6 +8,8 @@ const GitHubStrategy = require('passport-github').Strategy;
 
 const config = require('../../../config/config');
 
+const {User} = require('../db');
+
 exports.setup = function(app) {
   setupPassport();
   app.use(passport.initialize());
@@ -23,10 +25,9 @@ function setupPassport() {
     done(null, user.id);
   });
   passport.deserializeUser(function(id, done) {
-    done(null, {id: 1});
-    //User.findById(id, function(err, user) {
-    //  return done(err, user);
-    //});
+    User.findById(id)
+      .then((user) => done(null, user))
+      .catch((error) => done(error, null));
   });
 
   passport.use(new GoogleStrategy(
@@ -35,13 +36,7 @@ function setupPassport() {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: urljoin(config.api.host, '/auth/google/callback'),
     },
-    function(token, tokenSecret, profile, done) {
-      console.log('google auth profile', profile);
-      done(null, {id: 1});
-      //User.findOrCreate({googleId: profile.id}, function(err, user) {
-      //  return done(err, user);
-      //});
-    }
+    fetchOrCreateUser('googleId')
   ));
 
   passport.use(new TwitterStrategy(
@@ -49,14 +44,9 @@ function setupPassport() {
       consumerKey: process.env.TWITTER_CONSUMER_KEY,
       consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
       callbackURL: urljoin(config.api.host, '/auth/twitter/callback'),
+      includeEmail: true,
     },
-    function(token, tokenSecret, profile, done) {
-      console.log('twitter auth profile', profile);
-      done(null, {id: 1});
-      //User.findOrCreate({twitterId: profile.id}, function(err, user) {
-      //  return done(err, user);
-      //});
-    }
+    fetchOrCreateUser('twitterId')
   ));
 
   passport.use(new GitHubStrategy(
@@ -64,15 +54,47 @@ function setupPassport() {
       clientID: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
       callbackURL: urljoin(config.api.host, '/auth/github/callback'),
+      scope: 'user:email',
     },
-    function(accessToken, refreshToken, profile, done) {
-      console.log('github auth profile', profile);
-      done(null, {id: 1});
-      //User.findOrCreate({githubId: profile.id}, function(err, user) {
-      //  return done(err, user);
-      //});
-    }
+    fetchOrCreateUser('githubId')
   ));
+
+  function fetchOrCreateUser(key) {
+    return (token, tokenSecret, profile, done) => {
+      const email = profile.emails.reduce((acc, email) => {
+        if (email.primary || !acc) {
+          return email.value;
+        }
+        return acc;
+      }, null);
+
+      User.findOrCreate({
+        where: {
+          $or: [
+            {[key]: profile.id},
+            {email: email},
+          ],
+        },
+      }).spread((user, created) => {
+        if (created) {
+          // need to populate with profile info only if created
+          user.update({
+            name: profile.displayName,
+            email: email,
+            lastLogin: new Date(),
+            isActive: true,
+            [key]: profile.id,
+          }).then(() => done(null, user));
+        }
+        else {
+          user.update({
+            lastLogin: new Date(),
+            [key]: profile.id,
+          }).then(() => done(null, user));
+        }
+      });
+    };
+  }
 }
 
 function setupRouter() {
@@ -128,11 +150,7 @@ function setupRouter() {
   });
 
   routes.get('/auth/me', function*() {
-    console.log('me', this.sessionId);
-    // forces set cookie
-    this.sessionSave = true;
-    //TODO: Real user based on what is stored in the session
-    this.body = {id: 1};
+    this.body = this.req.user;
   });
 
   routes.all('/auth/success', function*() {
@@ -149,7 +167,7 @@ function setupRouter() {
     const origin = this.session.loginOrigin || config.app.host;
 
     //TODO: Attach failure reason
-    this.redirect(urljoin(origin, '/login'));
+    this.redirect(urljoin(origin, '/login?error=failed'));
     this.session.loginOrigin = null;
     this.session.afterLogin = null;
   });
