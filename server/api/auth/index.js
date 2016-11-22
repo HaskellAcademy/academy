@@ -1,3 +1,5 @@
+const url = require('url');
+
 const urljoin = require('url-join');
 
 const router = require('koa-router');
@@ -176,18 +178,9 @@ function setupRouter() {
 }
 
 function* saveRedirect(next) {
-  // This is a special hack just for development
-  // We have to do this because the development server is
-  // on a different port than what we need to go to
-  // The proxy server is not listed as the origin so
-  // we use the referrer as a trick in order to go
-  // to the right place after login
-  if (process.env.NODE_ENV !== 'production') {
-    this.session.loginOrigin = this.headers.referer;
-  }
-  else {
-    this.session.loginOrigin = this.origin;
-  }
+  const parsed = url.parse(this.headers.referer);
+  parsed.pathname = parsed.path = '';
+  this.session.loginOrigin = url.format(parsed);
   if (this.query.next) {
     this.session.afterLogin = this.query.next;
   }
