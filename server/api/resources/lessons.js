@@ -13,6 +13,7 @@ module.exports = new Resource('lessons', {
   create: function *() {
   },
   // GET /lessons/:id
+  // Gets lesson by lesson index column, NOT id
   show: function *() {
     //TODO: Disallow getting unpublished or deleted lessons
     this.body = {
