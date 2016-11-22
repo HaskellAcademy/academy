@@ -1,5 +1,6 @@
 const Home = require('./components/pages/Home');
 
+const LessonsOverview = require('./containers/LessonsOverviewPage');
 const Lesson = require('./containers/LessonPage');
 const Login = require('./containers/LoginPage');
 
@@ -13,9 +14,18 @@ const routes = Object.freeze({
     onEnter: Home.onPageEnter,
     onLeave: Home.onPageLeave,
   }),
+  lessons: Object.freeze({
+    title: 'Lessons Overview',
+    path: 'lessons',
+    href: '#/lessons',
+    pattern: /^\/lessons\/?/,
+    component: LessonsOverview,
+    onEnter: LessonsOverview.onPageEnter,
+    onLeave: LessonsOverview.onPageLeave,
+  }),
   lesson: Object.freeze({
     title: 'Lesson',
-    path: 'lesson/:id',
+    path: 'lessons/:id',
     href: '#/lesson',
     pattern: /^\/lesson\/?.*/,
     component: Lesson,
