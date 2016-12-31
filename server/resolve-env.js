@@ -21,25 +21,41 @@ module.exports = () => {
       env = argv.env;
     }
 
-    let defs;
-    try {
-      defs = fs.readFileSync(env).toString();
-    }
-    catch (e) {
-      console.error(`Failed to load environment file: ${env}`);
-      return;
-    }
+    const defs = readEnv(env);
 
-    for (let line of defs.split('\n')) {
-      line = line.trim();
-      if (!line || line.startsWith('#')) {
-        continue;
-      }
-
-      const [name, value] = line.split('=', 2);
+    for (const [name, value] of parseEnv(defs)) {
       process.env[name.trim()] = value.trim();
     }
 
     console.info(`Successfully loaded environment file: ${env}`);
   }
 };
+
+/**
+ * Attempts to fetch the environment file synchronously
+ */
+function readEnv(filename) {
+  try {
+    /* eslint no-sync: off */
+    return fs.readFileSync(filename).toString();
+  }
+  catch (e) {
+    console.error(`Failed to load environment file: ${filename}`);
+    return null;
+  }
+}
+
+/**
+ * Parses each line of the environment file
+ */
+function *parseEnv(contents) {
+  for (let line of contents.split('\n')) {
+    line = line.trim();
+    if (!line || line.startsWith('#')) {
+      continue;
+    }
+
+    const [name, value] = line.split('=', 2);
+    yield [name, value];
+  }
+}

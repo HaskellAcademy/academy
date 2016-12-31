@@ -1,5 +1,5 @@
 // This table represents user lesson progress
-module.exports = function(sequelize, DataTypes) {
+module.exports = function defineModel(sequelize, DataTypes) {
   return sequelize.define('progress', {
     // The first time a user submits any lesson, this table gets
     // a record recording that they started the lesson

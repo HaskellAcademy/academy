@@ -6,6 +6,7 @@ const responseTime = require('koa-response-time');
 const cors = require('koa-cors');
 const session = require('koa-generic-session');
 const bodyParser = require('koa-bodyparser');
+const zlib = require('zlib');
 
 const config = require('../../config/config');
 
@@ -33,17 +34,18 @@ app.use(cors({
 }));
 
 app.use(limit({
-  duration: 3*60*1000,
+  duration: 3 * 60 * 1000,
   max: 100,
   blacklist: ['127.0.0.1'],
 }));
 
 app.use(compress({
-  flush: require('zlib').Z_SYNC_FLUSH,
+  flush: zlib.Z_SYNC_FLUSH,
 }));
 
 app.use(session({
-  key: 'ha:sess', // cookie name
+  // cookie name
+  key: 'ha:sess',
   cookie: {
     domain: `.${config.app.hostname}`,
     maxage: 365 * 24 * 60 * 60 * 1000, // one year in ms,
