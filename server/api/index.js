@@ -4,6 +4,7 @@ const limit = require('koa-better-ratelimit');
 const compress = require('koa-compress');
 const responseTime = require('koa-response-time');
 const cors = require('koa-cors');
+const zlib = require('zlib');
 
 const config = require('../../config/config');
 
@@ -27,13 +28,13 @@ app.use(cors({
 }));
 
 app.use(limit({
-  duration: 3*60*1000,
+  duration: 3 * 60 * 1000,
   max: 100,
   blacklist: ['127.0.0.1'],
 }));
 
 app.use(compress({
-  flush: require('zlib').Z_SYNC_FLUSH,
+  flush: zlib.Z_SYNC_FLUSH,
 }));
 
 for (const resource of resources) {

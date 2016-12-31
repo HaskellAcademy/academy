@@ -1,4 +1,4 @@
-module.exports = function(sequelize, DataTypes) {
+module.exports = function defineModel(sequelize, DataTypes) {
   return sequelize.define('lesson', {
     id: {
       type: DataTypes.INTEGER,
